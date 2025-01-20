@@ -1,8 +1,6 @@
 package com.example.gui2_base
 
-import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.widget.ImageView
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
@@ -13,14 +11,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
 import androidx.compose.ui.res.painterResource
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -28,13 +23,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ExitToApp
@@ -48,15 +42,15 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.material3.TextField
-import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.shadow
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.text.input.TextFieldValue
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.sp
 
 
@@ -73,8 +67,8 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AndroidColumnMain() {
-    //lister, saisir, regler
-    var shownPage = "saisir"
+    val possiblePages = arrayOf("lister", "saisir", "regler")
+    var shownPage = possiblePages[2]
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -194,14 +188,14 @@ fun AndroidColumnMain() {
                                 "  " + buttonData.name + "  ",
                                 color = buttonData.colorText,
                                 fontSize = 16.sp
-                            ) // Text inside the button
+                            )
                         }
                     }
                 }
 
-                Row(
+                Row( // Just to make a line
                     modifier = Modifier
-                        .height(1.dp) // Just to make a line
+                        .height(1.dp)
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp)
                         .background(Color.Gray)
@@ -454,6 +448,289 @@ fun AndroidColumnMain() {
 
                 }
             }
+
+            if (shownPage == "regler") {
+                Row() {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(end = 20.dp)
+                    ) {
+                        Row {
+                            TextField(
+                                value = "17/07/2019",
+                                onValueChange = {},
+                                label = { Text("Date de cubage *") },
+                                enabled = false,
+                                modifier = Modifier // Didn't manage to remove internal padding
+                                    .padding(
+                                        horizontal = 10.dp,
+                                        vertical = 10.dp
+                                    ),
+                                textStyle = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 18.sp
+                                ),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    containerColor = Color.White,
+                                )
+                            )
+                        }
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(1f)
+                            .padding(start = 20.dp)
+                    ) {
+                        Row() {
+                            TextField(
+                                value = "9999",
+                                onValueChange = {},
+                                label = { Text("Numéro *") },
+                                enabled = false,
+                                modifier = Modifier // Didn't manage to remove internal padding
+                                    .padding(
+                                        horizontal = 10.dp,
+                                        vertical = 10.dp
+                                    ),
+                                textStyle = TextStyle(
+                                    color = Color.Black,
+                                    fontSize = 18.sp
+                                ),
+                                colors = TextFieldDefaults.textFieldColors(
+                                    containerColor = Color.White,
+                                )
+                            )
+                        }
+                    }
+                }
+
+                Row() {
+                    Column() {
+                        TextField(
+                            value = "Erddg234",
+                            onValueChange = {},
+                            label = { Text("Coupe *") },
+                            enabled = false,
+                            modifier = Modifier
+                                .fillMaxWidth() // Didn't manage to remove internal padding
+                                .padding(
+                                    horizontal = 10.dp,
+                                    vertical = 10.dp
+                                ),
+                            textStyle = TextStyle(
+                                color = Color.Black,
+                                fontSize = 18.sp
+                            ),
+                            colors = TextFieldDefaults.textFieldColors(
+                                containerColor = Color.White,
+                            )
+                        )
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(bottom = 10.dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(10.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(bottom = 2.dp)
+                        ) {
+                            Text(
+                                "Description *",
+                                color = Color.Gray,
+                                fontSize = 13.sp
+                            )
+                        }
+                        Row() {
+                            BasicTextField(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(120.dp)
+                                    .border(1.dp, Color.Gray, RoundedCornerShape(5.dp)),
+                                value = "",
+                                onValueChange = {}, // Update the value when text changes
+                                textStyle = TextStyle(
+                                    fontSize = 18.sp,
+                                    color = Color.Black
+                                ), // Set font size and color
+                            )
+                        }
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .padding(bottom = 30.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 2.dp)
+                            .weight(1f)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(start = 14.dp, bottom = 2.dp)
+                        ) {
+                            Text(
+                                "Format *",
+                                color = Color.Gray,
+                                fontSize = 13.sp
+                            )
+                        }
+                        Row() {
+                            RadioButton(
+                                selected = false,
+                                onClick = {},
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = Color(0xFFE5810D),
+                                    unselectedColor = Color(0xFFE5810D)
+                                )
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically),
+                                text = "Pile",
+                                fontSize = 18.sp
+                            )
+                        }
+                        Row() {
+                            RadioButton(
+                                selected = true,
+                                onClick = {},
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = Color(0xFFE5810D),
+                                    unselectedColor = Color(0xFFE5810D)
+                                )
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically),
+                                text = "Tige",
+                                fontSize = 18.sp
+                            )
+                        }
+                        Row( // Just to make a line
+                            modifier = Modifier
+                                .height(1.dp)
+                                .padding(horizontal = 10.dp)
+                                .background(Color.Gray)
+                                .fillMaxWidth()
+                        ) {}
+                    }
+                    Column(
+                        modifier = Modifier
+                            .padding(start = 16.dp)
+                            .weight(1f)
+                    ) {
+                        Row(
+                            modifier = Modifier
+                                .padding(start = 12.dp, bottom = 2.dp)
+                        ) {
+                            Text(
+                                "Ecorse *",
+                                color = Color.Gray,
+                                fontSize = 13.sp
+                            )
+                        }
+                        Row() {
+                            RadioButton(
+                                selected = false,
+                                onClick = {},
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = Color(0xFFE5810D),
+                                    unselectedColor = Color(0xFFE5810D)
+                                )
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically),
+                                text = "Sur Ecorce",
+                                fontSize = 18.sp
+                            )
+                        }
+                        Row() {
+                            RadioButton(
+                                selected = true,
+                                onClick = {},
+                                modifier = Modifier.align(Alignment.CenterVertically),
+                                colors = RadioButtonDefaults.colors(
+                                    selectedColor = Color(0xFFE5810D),
+                                    unselectedColor = Color(0xFFE5810D)
+                                )
+                            )
+                            Text(
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically),
+                                text = "Ecorcée",
+                                fontSize = 18.sp
+                            )
+                        }
+                        Row( // Just to make a line
+                            modifier = Modifier
+                                .height(1.dp)
+                                .padding(horizontal = 10.dp)
+                                .background(Color.Gray)
+                                .fillMaxWidth()
+                        ) {}
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(10.dp),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .weight(1f),
+                        horizontalAlignment = Alignment.Start
+                    ) {
+                        Button(
+                            onClick = {},
+                            shape = RoundedCornerShape(5.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFFB3261E)
+                            ),
+                            modifier = Modifier.width(160.dp)
+                        ) {
+                            Text(
+                                "Annuler",
+                                fontSize = 22.sp
+                            )
+                        }
+                    }
+                    Column(
+                        modifier = Modifier
+                            .weight(1f),
+                        horizontalAlignment = Alignment.End
+                    ) {
+                        Button(
+                            onClick = {},
+                            shape = RoundedCornerShape(5.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = Color(0xFF009951)
+                            ),
+                            modifier = Modifier.width(160.dp)
+                        ) {
+                            Text(
+                                "Enregistrer",
+                                fontSize = 22.sp
+                            )
+                        }
+                    }
+                }
+            }
         }
 
         Box(
@@ -471,13 +748,28 @@ fun AndroidColumnMain() {
                 verticalAlignment = Alignment.Top,
                 horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                class menuIcon(var icon: ImageVector, var name: String, var colorIcon: Color, var colorBackground: Color)
+                class menuIcon(
+                    var icon: ImageVector,
+                    var name: String,
+                    var colorIcon: Color,
+                    var colorBackground: Color
+                )
 
                 // List of custom text for the repeatable column
                 val customIconData = listOf(
                     menuIcon(Icons.Default.List, "Lister", Color.Black, Color.White),
-                    menuIcon(Icons.Default.ExitToApp, "Saisir", Color.White, Color(0xFFE5810D)), //Icon is the closed possible
-                    menuIcon(Icons.Default.AddCircle, "Régler", Color.White, Color(0xFFE5810D)) //Icon is the closed possible
+                    menuIcon(
+                        Icons.Default.ExitToApp,
+                        "Saisir",
+                        Color.White,
+                        Color(0xFFE5810D)
+                    ), //Icon is the closed possible
+                    menuIcon(
+                        Icons.Default.AddCircle,
+                        "Régler",
+                        Color.White,
+                        Color(0xFFE5810D)
+                    ) //Icon is the closed possible
                 )
 
                 customIconData.forEach { dataIcon ->
@@ -485,14 +777,19 @@ fun AndroidColumnMain() {
                         verticalArrangement = Arrangement.Top,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        Row(modifier = Modifier
-                            .background(
-                                dataIcon.colorBackground,
-                                RoundedCornerShape(50.dp)
-                            )
-                            .padding(horizontal = 6.dp, vertical = 4.dp) // Padding inside the box
-                            .width(40.dp),
-                            horizontalArrangement = Arrangement.Center) {
+                        Row(
+                            modifier = Modifier
+                                .background(
+                                    dataIcon.colorBackground,
+                                    RoundedCornerShape(50.dp)
+                                )
+                                .padding(
+                                    horizontal = 6.dp,
+                                    vertical = 4.dp
+                                ) // Padding inside the box
+                                .width(40.dp),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
                             Icon(
                                 imageVector = dataIcon.icon,
                                 contentDescription = "Info desc",
@@ -500,7 +797,6 @@ fun AndroidColumnMain() {
                             )
                         }
 
-                        // Display custom text
                         Text(dataIcon.name, color = Color.White)
                     }
                 }
