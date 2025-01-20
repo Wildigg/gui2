@@ -68,7 +68,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun AndroidColumnMain() {
     val possiblePages = arrayOf("lister", "saisir", "regler")
-    var shownPage = possiblePages[2]
+    val shownPage = possiblePages[2]
 
     Box(
         modifier = Modifier.fillMaxSize()
